@@ -5,7 +5,7 @@ export const PhotosList = ({photos}) => {
       {photos.map(({ id, previewURL }) => (
         <GridItem key={id}>
           <CardItem color="grey">
-            <img src={previewURL}/>
+            <img src={previewURL} alt=''/>
           </CardItem>
         </GridItem>
       ))}
