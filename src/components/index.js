@@ -14,3 +14,5 @@ export * from 'components/Grid/Grid.styled';
 export * from 'components/ImageCard/ImageCard.styled';
 export * from 'components/PhotosList/PhotosList'
 export * from 'components/Loader/Loader'
+export * from 'components/Modal/Modal'
+export * from 'components/Modal/Overlay.styled'

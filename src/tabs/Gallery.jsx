@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
 import * as ImageService from 'service/image-service';
-import { Button, SearchForm, Text, PhotosList, Loader } from 'components';
+import { Button, SearchForm, Text, PhotosList, Loader, Modal } from 'components';
 
 console.log('ImageService :>> ', ImageService);
 export class Gallery extends Component {
@@ -17,11 +17,13 @@ export class Gallery extends Component {
 
   componentDidUpdate(_, prevState) {
     const { query, page } = this.state;
+
     if (prevState.query !== query || prevState.page !== page) {
       this.setState({isLoading: true})
+
       ImageService.getImages(query, page)
         .then(({ hits, totalHits }) => {
-          console.log(hits)
+          
           if (!hits.length) {
             this.setState({ isEmpty: true });
             return;
@@ -52,6 +54,7 @@ export class Gallery extends Component {
       showBtn: false,
       isEmpty: false,
       error: '',
+      selectedImg: "",
     });
   };
 
@@ -61,12 +64,22 @@ export class Gallery extends Component {
     }));
   };
 
+  handleImg = (url) => {
+    this.setState({selectedImg: url})
+  };
+
+  handleEscape = () => {
+    this.setState({selectedImg: ""})
+  };
+
   render() {
-    const { photos, showBtn, isEmpty, error, isLoading } = this.state;
+    const { photos, showBtn, isEmpty, error, isLoading, selectedImg } = this.state;
     return (
       <>
         <SearchForm onSubmit={this.onSubmit} />
-        {photos.length > 0 && <PhotosList photos={photos}/>}
+        {selectedImg && <Modal url={selectedImg} handleEscape={this.handleEscape}/>}
+        {photos.length > 0 && <PhotosList photos={photos} handleImg={this.handleImg}/>}
+        
         {showBtn && <Button onClick={this.handleClick}>Load more...</Button>}
         {isEmpty && (
           <Text textAlign="center">Sorry. There are no images ... 😭</Text>

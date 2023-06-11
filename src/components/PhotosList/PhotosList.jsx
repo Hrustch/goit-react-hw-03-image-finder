@@ -1,11 +1,13 @@
 import { Grid, GridItem, CardItem } from 'components';
-export const PhotosList = ({photos}) => {
+export const PhotosList = ({photos, handleImg}) => {
   return (
-    <Grid>
+    <Grid onClick={(event)=>{handleImg(event.target.src)}}>
       {photos.map(({ id, previewURL }) => (
         <GridItem key={id}>
           <CardItem color="grey">
-            <img src={previewURL} alt=''/>
+              <a href={previewURL}>
+                <img src={previewURL} alt=''/>
+              </a>
           </CardItem>
         </GridItem>
       ))}
