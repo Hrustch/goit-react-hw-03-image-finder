@@ -11,7 +11,7 @@ export class Modal extends Component {
   }
 
   handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' || event.target === event.currentTarget) {
         this.props.handleEscape()
     }
   };
@@ -19,7 +19,7 @@ export class Modal extends Component {
   render() {
     const { url } = this.props;
     return (
-      <Overlay>
+      <Overlay onClick={this.handleKeyDown}>
         <img src={url} alt="" />
       </Overlay>
     );
